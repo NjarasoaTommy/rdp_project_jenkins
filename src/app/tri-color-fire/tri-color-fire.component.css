@@ -21,3 +21,9 @@
 .place.orange {
   background-color: orange;
 }
+
+/* ERROR CONTAINERE */
+.parent {
+  width: 100%;
+  height: 90px;
+}
