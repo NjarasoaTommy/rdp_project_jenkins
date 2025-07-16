@@ -1,6 +1,6 @@
-import { Component, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { NgxGraphModule, GraphComponent } from '@swimlane/ngx-graph';
 import { ErrorNotificationComponent } from '../error-notification/error-notification.component';
 
 @Component({
@@ -13,9 +13,15 @@ export class TriColorFireComponent implements AfterViewInit {
   error = '';
   showError = false;
 
+  @ViewChild(GraphComponent) graph?: GraphComponent;
+
+  renderGraph() {
+    setTimeout(() => this.graph?.update(), 0);
+  }
+
   constructor(private elRef: ElementRef) {}
 
-  ngAfterViewInit(): void {
+  checkError() {
     const host = this.elRef.nativeElement;
     const allPlaceWithError = Array.from(
       host.querySelectorAll('div.error')
@@ -28,6 +34,20 @@ export class TriColorFireComponent implements AfterViewInit {
         prevLabel.classList.add('error');
       }
     }
+  }
+  removeError() {
+    const host = this.elRef.nativeElement;
+    const allLabelWithError = Array.from(
+      host.querySelectorAll('strong.error')
+    ) as HTMLElement[];
+    for (let item of allLabelWithError) {
+      // console.log(item);
+      item.classList.remove('error');
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.checkError();
   }
 
   closeNotification() {
@@ -126,7 +146,7 @@ export class TriColorFireComponent implements AfterViewInit {
       jetons: 0,
       capacity: 1,
       couleur: 'vert',
-      isError: true,
+      isError: false,
     },
     {
       id: 'p3',
@@ -220,7 +240,7 @@ export class TriColorFireComponent implements AfterViewInit {
     { id: 'pt11', source: 'p1', target: 't1', poids: '1', isError: false }, //R1 -> V1
     { id: 'pt71', source: 'p7', target: 't1', poids: '1', isError: false }, //pontrol -> V1
     { id: 'tp12', source: 't1', target: 'p2', poids: '1', isError: false }, //---> V1
-    { id: 'pt22', source: 'p2', target: 't2', poids: '1', isError: true }, //V1 -> O1
+    { id: 'pt22', source: 'p2', target: 't2', poids: '1', isError: false }, //V1 -> O1
     { id: 'tp23', source: 't2', target: 'p3', poids: '1', isError: false }, //---> O1
     { id: 'pt33', source: 'p3', target: 't3', poids: '1', isError: false }, //O1 -> R1|Control
     { id: 'tp31', source: 't3', target: 'p1', poids: '1', isError: false }, //---> R1
@@ -311,13 +331,12 @@ export class TriColorFireComponent implements AfterViewInit {
   ];
 
   indicateError(id: string, type: string) {
-    alert(id + '   -   ' + type);
     if (type == 'place' || type == 'transition') {
       this.nodes.forEach((node) => {
         if (node.id == id) {
           node.isError = true;
-          console.log(node);
-          console.log(this.nodes);
+          // console.log(node);
+          // console.log(this.nodes);
           return;
         }
       });
@@ -325,19 +344,26 @@ export class TriColorFireComponent implements AfterViewInit {
       this.links.forEach((link) => {
         if (link.id == id) {
           link.isError = true;
+          // console.log(link);
+          // console.log(this.links);
           return;
         }
       });
-    } else {
-      alert('Hahaha');
     }
+    //  else {
+    //   alert('Hahaha');
+    // }
+    this.checkError();
+    this.renderGraph();
   }
   clearError() {
     this.nodes.forEach((node) => {
-      node.isError = true;
+      node.isError = false;
     });
     this.links.forEach((link) => {
-      link.isError = true;
+      link.isError = false;
     });
+    this.removeError();
+    this.renderGraph();
   }
 }
