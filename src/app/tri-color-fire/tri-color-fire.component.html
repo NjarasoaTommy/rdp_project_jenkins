@@ -1,4 +1,7 @@
 <div class="parent">
+  <button (click)="indicateError('p1', 'place')">Error P1</button>
+  <button (click)="indicateError('t1', 'transition')">Error T1</button>
+  <button (click)="indicateError('pt11', 'arc')">Error P1 -> T1</button>
   <app-error-notification
     *ngIf="showError"
     [message]="error"
