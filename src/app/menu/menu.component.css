@@ -1,5 +1,6 @@
 .navbar {
   position: fixed;
+  top: 0;
 }
 .navbar-brand {
   font-weight: bold;
