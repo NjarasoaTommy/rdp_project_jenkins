@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { ErrorNotificationComponent } from '../error-notification/error-notification.component';
@@ -9,9 +9,27 @@ import { ErrorNotificationComponent } from '../error-notification/error-notifica
   templateUrl: './tri-color-fire.component.html',
   styleUrl: './tri-color-fire.component.css',
 })
-export class TriColorFireComponent {
+export class TriColorFireComponent implements AfterViewInit {
   error = '';
   showError = false;
+
+  constructor(private elRef: ElementRef) {}
+
+  ngAfterViewInit(): void {
+    const host = this.elRef.nativeElement;
+    const allPlaceWithError = Array.from(
+      host.querySelectorAll('div.error')
+    ) as HTMLElement[];
+    for (let item of allPlaceWithError) {
+      // console.log(item);
+      const prevLabel = item.previousElementSibling;
+      if (prevLabel) {
+        // console.log(prevLabel);
+        prevLabel.classList.add('error');
+      }
+    }
+  }
+
   closeNotification() {
     this.showError = false;
   }
