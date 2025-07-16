@@ -217,21 +217,23 @@ export class TriColorFireComponent implements AfterViewInit {
   ];
 
   links = [
-    { source: 'p1', target: 't1', poids: '1', isError: false }, //R1 -> V1
-    { source: 'p7', target: 't1', poids: '1', isError: false }, //pontrol -> V1
-    { source: 't1', target: 'p2', poids: '1', isError: false }, //---> V1
-    { source: 'p2', target: 't2', poids: '1', isError: true }, //V1 -> O1
-    { source: 't2', target: 'p3', poids: '1', isError: false }, //---> O1
-    { source: 'p3', target: 't3', poids: '1', isError: false }, //--->Control
+    { id: 'pt11', source: 'p1', target: 't1', poids: '1', isError: false }, //R1 -> V1
+    { id: 'pt71', source: 'p7', target: 't1', poids: '1', isError: false }, //pontrol -> V1
+    { id: 'tp12', source: 't1', target: 'p2', poids: '1', isError: false }, //---> V1
+    { id: 'pt22', source: 'p2', target: 't2', poids: '1', isError: true }, //V1 -> O1
+    { id: 'tp23', source: 't2', target: 'p3', poids: '1', isError: false }, //---> O1
+    { id: 'pt33', source: 'p3', target: 't3', poids: '1', isError: false }, //O1 -> R1|Control
+    { id: 'tp31', source: 't3', target: 'p1', poids: '1', isError: false }, //---> R1
+    { id: 'tp37', source: 't3', target: 'p7', poids: '1', isError: false }, //--->Control
 
-    { source: 'p4', target: 't4', poids: '1', isError: false }, //R2 -> V2
-    { source: 'p7', target: 't4', poids: '1', isError: false }, //Control -> V2
-    { source: 't4', target: 'p5', poids: '1', isError: false }, //---> V2
-    { source: 'p5', target: 't5', poids: '1', isError: false }, //V2 -> O2
-    { source: 't5', target: 'p6', poids: '1', isError: false }, //---> O2
-    { source: 'p6', target: 't6', poids: '1', isError: false }, //O2 -> R2|Control
-    { source: 't6', target: 'p4', poids: '1', isError: false }, //---> R2
-    { source: 't6', target: 'p7', poids: '1', isError: false }, //---> Control
+    { id: 'pt44', source: 'p4', target: 't4', poids: '1', isError: false }, //R2 -> V2
+    { id: 'pt74', source: 'p7', target: 't4', poids: '1', isError: false }, //Control -> V2
+    { id: 'tp45', source: 't4', target: 'p5', poids: '1', isError: false }, //---> V2
+    { id: 'pt55', source: 'p5', target: 't5', poids: '1', isError: false }, //V2 -> O2
+    { id: 'tp56', source: 't5', target: 'p6', poids: '1', isError: false }, //---> O2
+    { id: 'pt66', source: 'p6', target: 't6', poids: '1', isError: false }, //O2 -> R2|Control
+    { id: 'tp64', source: 't6', target: 'p4', poids: '1', isError: false }, //---> R2
+    { id: 'tp67', source: 't6', target: 'p7', poids: '1', isError: false }, //---> Control
   ];
 
   placeMapping = [
@@ -307,4 +309,35 @@ export class TriColorFireComponent implements AfterViewInit {
       liaison: 'Orange2 -> Control',
     },
   ];
+
+  indicateError(id: string, type: string) {
+    alert(id + '   -   ' + type);
+    if (type == 'place' || type == 'transition') {
+      this.nodes.forEach((node) => {
+        if (node.id == id) {
+          node.isError = true;
+          console.log(node);
+          console.log(this.nodes);
+          return;
+        }
+      });
+    } else if (type == 'arc') {
+      this.links.forEach((link) => {
+        if (link.id == id) {
+          link.isError = true;
+          return;
+        }
+      });
+    } else {
+      alert('Hahaha');
+    }
+  }
+  clearError() {
+    this.nodes.forEach((node) => {
+      node.isError = true;
+    });
+    this.links.forEach((link) => {
+      link.isError = true;
+    });
+  }
 }
