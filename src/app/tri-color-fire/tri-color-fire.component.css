@@ -1,0 +1,19 @@
+.parent_transition_verticale {
+  height: 90px;
+}
+
+.parent_transition_horizontale {
+  height: 90px;
+}
+
+.place.rouge {
+  background-color: #f11;
+}
+
+.place.vert {
+  background-color: #1f1;
+}
+
+.place.orange {
+  background-color: orange;
+}
