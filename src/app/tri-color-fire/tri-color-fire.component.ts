@@ -99,6 +99,7 @@ export class TriColorFireComponent {
       jetons: 1,
       capacity: 1,
       couleur: 'rouge',
+      isError: false,
     },
     {
       id: 'p2',
@@ -107,6 +108,7 @@ export class TriColorFireComponent {
       jetons: 0,
       capacity: 1,
       couleur: 'vert',
+      isError: true,
     },
     {
       id: 'p3',
@@ -115,6 +117,7 @@ export class TriColorFireComponent {
       jetons: 0,
       capacity: 1,
       couleur: 'orange',
+      isError: false,
     },
     {
       id: 'p4',
@@ -131,6 +134,7 @@ export class TriColorFireComponent {
       jetons: 0,
       capacity: 1,
       couleur: 'vert',
+      isError: false,
     },
     {
       id: 'p6',
@@ -139,6 +143,7 @@ export class TriColorFireComponent {
       jetons: 0,
       capacity: 1,
       couleur: 'orange',
+      isError: false,
     },
     {
       id: 'p7',
@@ -147,33 +152,68 @@ export class TriColorFireComponent {
       jetons: 1,
       capacity: 1,
       couleur: '',
+      isError: false,
     },
-    { id: 't1', label: 'T1', type: 'transition_verticale', couleur: '' },
-    { id: 't2', label: 'T2', type: 'transition_verticale', couleur: '' },
-    { id: 't3', label: 'T3', type: 'transition_verticale', couleur: '' },
-    { id: 't4', label: 'T4', type: 'transition_verticale', couleur: '' },
-    { id: 't5', label: 'T5', type: 'transition_verticale', couleur: '' },
-    { id: 't6', label: 'T6', type: 'transition_verticale', couleur: '' },
+    {
+      id: 't1',
+      label: 'T1',
+      type: 'transition_verticale',
+      couleur: '',
+      isError: false,
+    },
+    {
+      id: 't2',
+      label: 'T2',
+      type: 'transition_verticale',
+      couleur: '',
+      isError: false,
+    },
+    {
+      id: 't3',
+      label: 'T3',
+      type: 'transition_verticale',
+      couleur: '',
+      isError: false,
+    },
+    {
+      id: 't4',
+      label: 'T4',
+      type: 'transition_verticale',
+      couleur: '',
+      isError: false,
+    },
+    {
+      id: 't5',
+      label: 'T5',
+      type: 'transition_verticale',
+      couleur: '',
+      isError: false,
+    },
+    {
+      id: 't6',
+      label: 'T6',
+      type: 'transition_verticale',
+      couleur: '',
+      isError: false,
+    },
   ];
 
   links = [
-    { source: 'p1', target: 't1', poids: '1' }, //R1 -> V1
-    { source: 'p7', target: 't1', poids: '1' }, //pontrol -> V1
-    { source: 't1', target: 'p2', poids: '1' }, //---> V1
-    { source: 'p2', target: 't2', poids: '1' }, //V1 -> O1
-    { source: 't2', target: 'p3', poids: '1' }, //---> O1
-    { source: 'p3', target: 't3', poids: '1' }, //O1 -> R1|Control
-    { source: 't3', target: 'p1', poids: '1' }, //--->R1
-    { source: 't3', target: 'p7', poids: '1' }, //--->Control
+    { source: 'p1', target: 't1', poids: '1', isError: false }, //R1 -> V1
+    { source: 'p7', target: 't1', poids: '1', isError: false }, //pontrol -> V1
+    { source: 't1', target: 'p2', poids: '1', isError: false }, //---> V1
+    { source: 'p2', target: 't2', poids: '1', isError: true }, //V1 -> O1
+    { source: 't2', target: 'p3', poids: '1', isError: false }, //---> O1
+    { source: 'p3', target: 't3', poids: '1', isError: false }, //--->Control
 
-    { source: 'p4', target: 't4', poids: '1' }, //R2 -> V2
-    { source: 'p7', target: 't4', poids: '1' }, //Control -> V2
-    { source: 't4', target: 'p5', poids: '1' }, //---> V2
-    { source: 'p5', target: 't5', poids: '1' }, //V2 -> O2
-    { source: 't5', target: 'p6', poids: '1' }, //---> O2
-    { source: 'p6', target: 't6', poids: '1' }, //O2 -> R2|Control
-    { source: 't6', target: 'p4', poids: '1' }, //---> R2
-    { source: 't6', target: 'p7', poids: '1' }, //---> Control
+    { source: 'p4', target: 't4', poids: '1', isError: false }, //R2 -> V2
+    { source: 'p7', target: 't4', poids: '1', isError: false }, //Control -> V2
+    { source: 't4', target: 'p5', poids: '1', isError: false }, //---> V2
+    { source: 'p5', target: 't5', poids: '1', isError: false }, //V2 -> O2
+    { source: 't5', target: 'p6', poids: '1', isError: false }, //---> O2
+    { source: 'p6', target: 't6', poids: '1', isError: false }, //O2 -> R2|Control
+    { source: 't6', target: 'p4', poids: '1', isError: false }, //---> R2
+    { source: 't6', target: 'p7', poids: '1', isError: false }, //---> Control
   ];
 
   placeMapping = [
