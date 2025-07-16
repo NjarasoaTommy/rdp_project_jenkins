@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { ErrorNotificationComponent } from '../error-notification/error-notification.component';
 
 @Component({
   selector: 'app-tri-color-fire',
-  imports: [CommonModule, NgxGraphModule],
+  imports: [CommonModule, NgxGraphModule, ErrorNotificationComponent],
   templateUrl: './tri-color-fire.component.html',
   styleUrl: './tri-color-fire.component.css',
 })
 export class TriColorFireComponent {
+  error = '';
+  showError = false;
+  closeNotification() {
+    this.showError = false;
+  }
   franchir(type: string, id: string) {
     if (type != 'place') {
       const allPre = this.getAllPre(id);
@@ -33,7 +39,8 @@ export class TriColorFireComponent {
         );
         allPost.forEach((val) => this.updateJeton(val[0], parseInt(val[1])));
       } else {
-        alert("Cette transition n'est pas franchissable");
+        this.error = "Cette transition n'est pas franchissable";
+        this.showError = true;
       }
     }
   }
