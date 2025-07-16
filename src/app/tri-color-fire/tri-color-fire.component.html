@@ -1,1 +1,90 @@
-<p>tri-color-fire works!</p>
+<div class="graph-container">
+  <ngx-graph
+    [nodes]="nodes"
+    [links]="links"
+    [layout]="'dagre'"
+    [autoCenter]="true"
+    [autoZoom]="true"
+    [draggingEnabled]="false"
+  >
+    <ng-template #nodeTemplate let-node>
+      <svg:g>
+        <svg:foreignObject
+          [attr.width]="node.type == 'transition_verticale' ? '7' : '50'"
+          height="90"
+        >
+          <xhtml:div>
+            <div
+              [ngClass]="{
+                parent_place: node.type == 'place',
+                parent_transition_verticale:
+                  node.type == 'transition_verticale',
+                parent_transition_horizontale:
+                  node.type == 'transition_horizontale'
+              }"
+            >
+              <strong ngClass="capacity">{{ node.capacity }}</strong>
+              <div
+                [ngClass]="{
+                  noeuds: true,
+                  place: node.type == 'place',
+                  rouge: node.couleur == 'rouge',
+                  vert: node.couleur == 'vert',
+                  orange: node.couleur == 'orange',
+                  transition_verticale: node.type == 'transition_verticale',
+                  transition_horizontale: node.type == 'transition_horizontale',
+                  franchissable:
+                    node.type == 'transition_horizontale' ||
+                    node.type == 'transition_verticale'
+                }"
+                (click)="franchir(node.type, node.id)"
+              >
+                <div *ngIf="node.type == 'place'">
+                  <div
+                    *ngFor="let item of [].constructor(node.jetons)"
+                    key="index"
+                    ngClass="jeton"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </xhtml:div>
+        </svg:foreignObject>
+      </svg:g>
+    </ng-template>
+
+    <ng-template #defsTemplate>
+      <svg:marker
+        id="arrow"
+        viewBox="0 -5 10 10"
+        refX="8"
+        refY="0"
+        markerWidth="4"
+        markerHeight="4"
+        orient="auto"
+      >
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+      </svg:marker>
+    </ng-template>
+
+    <ng-template #linkTemplate let-link>
+      <svg:g class="edge">
+        <svg:path
+          class="line"
+          stroke-width="2"
+          marker-end="url(#arrow)"
+        ></svg:path>
+        <svg:text class="edge-label" text-anchor="middle">
+          <textPath
+            class="text-path"
+            [attr.href]="'#' + link.id"
+            [style.dominant-baseline]="link.dominantBaseline"
+            startOffset="50%"
+          >
+            {{ link.poids }}
+          </textPath>
+        </svg:text>
+      </svg:g>
+    </ng-template>
+  </ngx-graph>
+</div>
