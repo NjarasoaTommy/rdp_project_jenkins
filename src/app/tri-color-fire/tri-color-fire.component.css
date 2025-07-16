@@ -25,7 +25,8 @@
 strong.error {
   color: red;
 }
-.place.error {
+.place.error,
+.noeuds.error {
   border: 5px solid red;
 }
 
