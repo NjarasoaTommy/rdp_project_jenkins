@@ -30,13 +30,16 @@
                   node.type == 'transition_horizontale'
               }"
             >
-              <strong ngClass="capacity">{{ node.capacity }}</strong>
+              <strong [ngClass]="{ capacity: true, error: false }">{{
+                node.capacity
+              }}</strong>
               <div
                 [ngClass]="{
                   noeuds: true,
                   place: node.type == 'place',
                   rouge: node.couleur == 'rouge',
                   vert: node.couleur == 'vert',
+                  error: node.isError,
                   orange: node.couleur == 'orange',
                   transition_verticale: node.type == 'transition_verticale',
                   transition_horizontale: node.type == 'transition_horizontale',
@@ -62,15 +65,28 @@
 
     <ng-template #defsTemplate>
       <svg:marker
-        id="arrow"
+        id="arrowRed"
         viewBox="0 -5 10 10"
         refX="8"
         refY="0"
         markerWidth="4"
         markerHeight="4"
         orient="auto"
+        fill="red"
       >
-        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" stroke="red" />
+      </svg:marker>
+      <svg:marker
+        id="arrowBlack"
+        viewBox="0 -5 10 10"
+        refX="8"
+        refY="0"
+        markerWidth="4"
+        markerHeight="4"
+        orient="auto"
+        fill="black"
+      >
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" stroke="black" />
       </svg:marker>
     </ng-template>
 
@@ -78,12 +94,16 @@
       <svg:g class="edge">
         <svg:path
           class="line"
+          [attr.stroke]="link.isError ? 'red' : 'black'"
           stroke-width="2"
-          marker-end="url(#arrow)"
+          [attr.marker-end]="
+            link.isError ? 'url(#arrowRed)' : 'url(#arrowBlack)'
+          "
         ></svg:path>
         <svg:text class="edge-label" text-anchor="middle">
           <textPath
             class="text-path"
+            [attr.stroke]="link.isError ? 'red' : 'black'"
             [attr.href]="'#' + link.id"
             [style.dominant-baseline]="link.dominantBaseline"
             startOffset="50%"
