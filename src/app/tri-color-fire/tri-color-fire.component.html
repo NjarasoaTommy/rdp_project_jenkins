@@ -48,11 +48,13 @@
                 (click)="franchir(node.type, node.id)"
               >
                 <div *ngIf="node.type == 'place'">
-                  <div
-                    *ngFor="let item of [].constructor(node.jetons)"
-                    key="index"
-                    ngClass="jeton"
-                  ></div>
+                  <div *ngIf="node.jetons > 0">
+                    <div
+                      *ngFor="let item of [].constructor(node.jetons)"
+                      key="index"
+                      ngClass="jeton"
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
