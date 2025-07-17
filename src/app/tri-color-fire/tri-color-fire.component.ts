@@ -11,6 +11,8 @@ import { ErrorNotificationComponent } from '../error-notification/error-notifica
 })
 export class TriColorFireComponent implements AfterViewInit {
   error = '';
+  errorList: string[] = [];
+  franchissable: boolean = false;
   showError = false;
 
   @ViewChild(GraphComponent) graph?: GraphComponent;
@@ -20,6 +22,11 @@ export class TriColorFireComponent implements AfterViewInit {
   }
 
   constructor(private elRef: ElementRef) {}
+
+  emptyError() {
+    this.error = '';
+    this.errorList = [];
+  }
 
   checkError() {
     const host = this.elRef.nativeElement;
@@ -52,33 +59,45 @@ export class TriColorFireComponent implements AfterViewInit {
 
   closeNotification() {
     this.showError = false;
+    this.clearError();
+    this.emptyError();
   }
   franchir(type: string, id: string) {
     if (type != 'place') {
       const allPre = this.getAllPre(id);
       const allPost = this.getAllPost(id);
-      let franchissable = true;
-      allPre.forEach((val) => {
-        if (!this.testFranchir(val[0], -1 * parseInt(val[1]))) {
-          franchissable = false;
-          return;
+      this.franchissable = true;
+      allPre.forEach((val: any[]) => {
+        const err = this.testFranchir(val[0], -1 * parseInt(val[1]), 'entrée');
+        if (err != '') {
+          this.franchissable = false;
+          this.errorList.push(err);
+          this.indicateError(val[0], 'place');
+          // console.log(this.errorList);
         }
       });
-      allPost.forEach((val) => {
-        if (!this.testFranchir(val[0], parseInt(val[1]))) {
-          franchissable = false;
-          return;
+      allPost.forEach((val: any[]) => {
+        const err = this.testFranchir(val[0], parseInt(val[1]), 'sortie');
+        if (err != '') {
+          this.franchissable = false;
+          this.errorList.push(err);
+          this.indicateError(val[0], 'place');
+          console.log(this.errorList);
         }
       });
 
-      if (franchissable) {
+      if (this.franchissable) {
         allPre.forEach((val) =>
           this.updateJeton(val[0], -1 * parseInt(val[1]))
         );
         allPost.forEach((val) => this.updateJeton(val[0], parseInt(val[1])));
       } else {
-        this.error = "Cette transition n'est pas franchissable";
+        this.error = "Cette transition n'est pas franchissable.";
+        for (let err of this.errorList) {
+          this.error += err;
+        }
         this.showError = true;
+        this.indicateError(id, 'transition');
       }
     }
   }
@@ -116,17 +135,45 @@ export class TriColorFireComponent implements AfterViewInit {
     }
   }
 
-  testFranchir(id: string, val: number) {
+  testFranchir(id: string, val: number, type: string): string {
     const node = this.nodes.find((node) => node.id == id);
-    if (
+    if (node && node.jetons == 0 && type == 'entrée') {
+      return 'La place de départ(' + node.label + ") n'a pas de jeton.";
+    } else if (
       node &&
-      (node.jetons || node.jetons == 0) &&
-      node.jetons + val >= 0 &&
-      node.jetons + val <= node.capacity
+      node.jetons &&
+      node.jetons != 0 &&
+      node.jetons + val < 0 &&
+      type == 'entrée'
     ) {
-      return true;
+      return (
+        'La place de départ(' +
+        node.label +
+        ") n'a pas suffisament de jeton: Jeton : " +
+        node.jetons +
+        ' < capacité arc : ' +
+        (val < 0 ? -1 * val : val) +
+        '.'
+      );
+    } else if (
+      node &&
+      node.jetons &&
+      node.jetons + val > node.capacity &&
+      type == 'sortie'
+    ) {
+      return (
+        "La capacité maximale de la place d'arrivé(" +
+        node.label +
+        ') sera dépassé : ' +
+        node.capacity +
+        " car la valeur de l'arc est : " +
+        (val < 0 ? -1 * val : val) +
+        " et le nombre de jeton de place d'arrivé est de : " +
+        node.jetons +
+        '.'
+      );
     }
-    return false;
+    return '';
   }
 
   nodes = [
