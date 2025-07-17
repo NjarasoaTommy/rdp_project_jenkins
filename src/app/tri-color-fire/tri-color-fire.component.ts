@@ -90,9 +90,9 @@ export class TriColorFireComponent implements AfterViewInit {
 
       if (this.franchissable) {
         allPre.forEach((val) =>
-          this.updateJeton(val[0], -1 * parseInt(val[1]))
+          this.updateJeton(val[0], -1 * parseInt(val[2]))
         );
-        allPost.forEach((val) => this.updateJeton(val[0], parseInt(val[1])));
+        allPost.forEach((val) => this.updateJeton(val[0], parseInt(val[2])));
       } else {
         this.error = "Cette transition n'est pas franchissable.";
         for (let err of this.errorList) {
