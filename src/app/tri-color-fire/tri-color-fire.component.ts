@@ -68,21 +68,23 @@ export class TriColorFireComponent implements AfterViewInit {
       const allPost = this.getAllPost(id);
       this.franchissable = true;
       allPre.forEach((val: any[]) => {
-        const err = this.testFranchir(val[0], -1 * parseInt(val[1]), 'entrée');
+        const err = this.testFranchir(val[0], -1 * parseInt(val[2]), 'entrée');
         if (err != '') {
           this.franchissable = false;
           this.errorList.push(err);
           this.indicateError(val[0], 'place');
+          this.indicateError(val[1], 'arc');
           // console.log(this.errorList);
         }
       });
       allPost.forEach((val: any[]) => {
-        const err = this.testFranchir(val[0], parseInt(val[1]), 'sortie');
+        const err = this.testFranchir(val[0], parseInt(val[2]), 'sortie');
         if (err != '') {
           this.franchissable = false;
           this.errorList.push(err);
           this.indicateError(val[0], 'place');
-          console.log(this.errorList);
+          this.indicateError(val[1], 'arc');
+          // console.log(this.errorList);
         }
       });
 
@@ -108,6 +110,7 @@ export class TriColorFireComponent implements AfterViewInit {
       if (link.target == id) {
         const placeTransitionWithWeight = [];
         placeTransitionWithWeight.push(link.source);
+        placeTransitionWithWeight.push(link.id);
         placeTransitionWithWeight.push(link.poids);
         allPre.push(placeTransitionWithWeight);
       }
@@ -121,6 +124,7 @@ export class TriColorFireComponent implements AfterViewInit {
       if (link.source == id) {
         const transitionWithWeightPlace = [];
         transitionWithWeightPlace.push(link.target);
+        transitionWithWeightPlace.push(link.id);
         transitionWithWeightPlace.push(link.poids);
         allPost.push(transitionWithWeightPlace);
       }
