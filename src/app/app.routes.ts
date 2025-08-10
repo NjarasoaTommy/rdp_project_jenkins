@@ -9,6 +9,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'problem',
+    loadComponent: () =>
+      import('./problem/problem.component').then((m) => m.ProblemComponent),
+  },
+  {
     path: '',
     loadComponent: () =>
       import('./tri-color-fire/tri-color-fire.component').then(
