@@ -29,7 +29,14 @@
                   node.type == 'transition_horizontale'
               }"
             >
-              <div ngClass="node-title">{{ node.label }}</div>
+              <div
+                [ngClass]="{
+                  'node-title': true,
+                  error: node.isError
+                }"
+              >
+                {{ node.label }}
+              </div>
               <div
                 [ngClass]="{
                   noeuds: true,
@@ -56,7 +63,13 @@
                   </div>
                 </div>
               </div>
-              <strong ngClass="capacity">{{ node.capacity }}</strong>
+              <strong
+                [ngClass]="{
+                  capacity: true,
+                  error: node.isError
+                }"
+                >{{ node.capacity }}</strong
+              >
             </div>
           </xhtml:div>
         </svg:foreignObject>

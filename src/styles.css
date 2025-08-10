@@ -61,3 +61,7 @@
   display: block;
   text-align: center;
 }
+.capacity.error,
+.node-title.error {
+  color: red;
+}
