@@ -9,7 +9,7 @@ import { ErrorNotificationComponent } from '../error-notification/error-notifica
   templateUrl: './wolf-goat.component.html',
   styleUrl: './wolf-goat.component.css',
 })
-export class WolfGoatComponent {
+export class WolfGoatComponent implements AfterViewInit {
   error = '';
   errorList: string[] = [];
   franchissable: boolean = false;
@@ -34,10 +34,8 @@ export class WolfGoatComponent {
       host.querySelectorAll('div.error')
     ) as HTMLElement[];
     for (let item of allPlaceWithError) {
-      // console.log(item);
       const prevLabel = item.previousElementSibling;
       if (prevLabel) {
-        // console.log(prevLabel);
         prevLabel.classList.add('error');
       }
     }
@@ -48,7 +46,6 @@ export class WolfGoatComponent {
       host.querySelectorAll('strong.error')
     ) as HTMLElement[];
     for (let item of allLabelWithError) {
-      // console.log(item);
       item.classList.remove('error');
     }
   }
@@ -74,7 +71,6 @@ export class WolfGoatComponent {
           this.errorList.push(err);
           this.indicateError(val[0], 'place');
           this.indicateError(val[1], 'arc');
-          // console.log(this.errorList);
         }
       });
       allPost.forEach((val: any[]) => {
@@ -84,7 +80,6 @@ export class WolfGoatComponent {
           this.errorList.push(err);
           this.indicateError(val[0], 'place');
           this.indicateError(val[1], 'arc');
-          // console.log(this.errorList);
         }
       });
 
@@ -166,13 +161,16 @@ export class WolfGoatComponent {
       type == 'sortie'
     ) {
       return (
-        "La capacité maximale de la place d'arrivé(" +
-        node.label +
-        ') sera dépassé : ' +
+        'La capacité maximale(' +
         node.capacity +
-        " car la valeur de l'arc est : " +
+        ") de la place d'arrivé(" +
+        node.label +
+        ') sera dépassé' +
+        " car la valeur de l'arc est " +
         (val < 0 ? -1 * val : val) +
-        " et le nombre de jeton de place d'arrivé est de : " +
+        " et le nombre de jeton de place d'arrivé(" +
+        node.label +
+        ') est ' +
         node.jetons +
         '.'
       );
@@ -405,8 +403,6 @@ export class WolfGoatComponent {
       this.nodes.forEach((node) => {
         if (node.id == id) {
           node.isError = true;
-          // console.log(node);
-          // console.log(this.nodes);
           return;
         }
       });
@@ -414,15 +410,10 @@ export class WolfGoatComponent {
       this.links.forEach((link) => {
         if (link.id == id) {
           link.isError = true;
-          // console.log(link);
-          // console.log(this.links);
           return;
         }
       });
     }
-    //  else {
-    //   alert('Hahaha');
-    // }
     this.checkError();
     this.renderGraph();
   }
