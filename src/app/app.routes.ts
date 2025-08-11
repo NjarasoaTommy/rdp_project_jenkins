@@ -14,6 +14,13 @@ export const routes: Routes = [
       import('./problem/problem.component').then((m) => m.ProblemComponent),
   },
   {
+    path: 'wolf-goat',
+    loadComponent: () =>
+      import('./wolf-goat/wolf-goat.component').then(
+        (m) => m.WolfGoatComponent
+      ),
+  },
+  {
     path: '',
     loadComponent: () =>
       import('./tri-color-fire/tri-color-fire.component').then(
