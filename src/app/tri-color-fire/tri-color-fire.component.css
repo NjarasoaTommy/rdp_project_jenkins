@@ -29,9 +29,3 @@ strong.error {
 .noeuds.error {
   border: 5px solid red;
 }
-
-/* ERROR CONTAINERE */
-.parent {
-  width: 100%;
-  height: 90px;
-}

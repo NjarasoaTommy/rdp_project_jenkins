@@ -1,10 +1,8 @@
-<div class="parent">
-  <app-error-notification
-    *ngIf="showError"
-    [message]="error"
-    (hideNotification)="closeNotification()"
-  ></app-error-notification>
-</div>
+<app-error-notification
+  *ngIf="showError"
+  [message]="error"
+  (hideNotification)="closeNotification()"
+></app-error-notification>
 <div class="graph-container">
   <ngx-graph
     [nodes]="nodes"
@@ -16,8 +14,8 @@
     <ng-template #nodeTemplate let-node>
       <svg:g>
         <svg:foreignObject
-          [attr.width]="node.type == 'transition_verticale' ? '20' : '50'"
-          [attr.height]="node.type == 'transition_horizontale' ? '20' : '90'"
+          [attr.width]="node.type == 'transition_verticale' ? '25' : '50'"
+          [attr.height]="node.type == 'transition_horizontale' ? '25' : '90'"
         >
           <xhtml:div>
             <div
