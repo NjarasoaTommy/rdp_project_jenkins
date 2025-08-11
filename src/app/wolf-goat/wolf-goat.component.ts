@@ -527,7 +527,6 @@ export class WolfGoatComponent implements AfterViewInit {
   }
 
   removeNode(id: string) {
-    console.log(id);
     this.nodes = this.nodes.filter((node: any) => node.id != id);
     this.links = this.links.filter(
       (link: any) => link.source != id && link.target != id
