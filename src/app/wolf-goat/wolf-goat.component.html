@@ -1,0 +1,130 @@
+<div class="parent">
+  <app-error-notification
+    *ngIf="showError"
+    [message]="error"
+    (hideNotification)="closeNotification()"
+  ></app-error-notification>
+</div>
+<div class="graph-container">
+  <ngx-graph
+    [nodes]="nodes"
+    [links]="links"
+    [layout]="'dagre'"
+    [autoCenter]="true"
+    [draggingEnabled]="false"
+  >
+    <ng-template #nodeTemplate let-node>
+      <svg:g>
+        <svg:foreignObject
+          [attr.width]="node.type == 'transition_verticale' ? '20' : '50'"
+          [attr.height]="node.type == 'transition_horizontale' ? '20' : '90'"
+        >
+          <xhtml:div>
+            <div
+              [ngClass]="{
+                parent_place: node.type == 'place',
+                parent_transition_verticale:
+                  node.type == 'transition_verticale',
+                parent_transition_horizontale:
+                  node.type == 'transition_horizontale'
+              }"
+            >
+              <div
+                [ngClass]="{
+                  'node-title': true,
+                  error: node.isError
+                }"
+              >
+                {{ node.label }}
+              </div>
+              <div
+                [ngClass]="{
+                  noeuds: true,
+                  place: node.type == 'place',
+                  rouge: node.couleur == 'rouge',
+                  vert: node.couleur == 'vert',
+                  error: node.isError,
+                  orange: node.couleur == 'orange',
+                  transition_verticale: node.type == 'transition_verticale',
+                  transition_horizontale: node.type == 'transition_horizontale',
+                  franchissable:
+                    node.type == 'transition_horizontale' ||
+                    node.type == 'transition_verticale'
+                }"
+                (click)="franchir(node.type, node.id)"
+              >
+                <div *ngIf="node.type == 'place'">
+                  <div *ngIf="node.jetons > 0">
+                    <div
+                      *ngFor="let item of [].constructor(node.jetons)"
+                      key="index"
+                      ngClass="jeton"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <strong
+                [ngClass]="{
+                  capacity: true,
+                  error: node.isError
+                }"
+                >{{ node.capacity }}</strong
+              >
+            </div>
+          </xhtml:div>
+        </svg:foreignObject>
+      </svg:g>
+    </ng-template>
+
+    <ng-template #defsTemplate>
+      <svg:marker
+        id="arrowRed"
+        viewBox="0 -5 10 10"
+        refX="8"
+        refY="0"
+        markerWidth="4"
+        markerHeight="4"
+        orient="auto"
+        fill="red"
+      >
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" stroke="red" />
+      </svg:marker>
+      <svg:marker
+        id="arrowBlack"
+        viewBox="0 -5 10 10"
+        refX="8"
+        refY="0"
+        markerWidth="4"
+        markerHeight="4"
+        orient="auto"
+        fill="black"
+      >
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" stroke="black" />
+      </svg:marker>
+    </ng-template>
+
+    <ng-template #linkTemplate let-link>
+      <svg:g class="edge">
+        <svg:path
+          class="line"
+          [attr.stroke]="link.isError ? 'red' : 'black'"
+          stroke-width="2"
+          [attr.marker-end]="
+            link.isError ? 'url(#arrowRed)' : 'url(#arrowBlack)'
+          "
+        ></svg:path>
+        <svg:text class="edge-label" text-anchor="middle">
+          <textPath
+            class="text-path"
+            [attr.stroke]="link.isError ? 'red' : 'black'"
+            [attr.href]="'#' + link.id"
+            [style.dominant-baseline]="link.dominantBaseline"
+            startOffset="50%"
+          >
+            {{ link.poids }}
+          </textPath>
+        </svg:text>
+      </svg:g>
+    </ng-template>
+  </ngx-graph>
+</div>
