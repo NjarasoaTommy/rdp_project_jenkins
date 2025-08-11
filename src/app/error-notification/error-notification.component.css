@@ -1,16 +1,22 @@
 .error-message-container {
   position: absolute;
-  z-index: 100;
+  z-index: 50;
   top: 60px;
-  left: 90px;
-  right: 90px;
+  left: 0px;
+  right: 0px;
+}
+.error-card {
+  margin: 0 auto;
 }
 .error {
   box-shadow: 1px 1px 3px red;
   height: 170px;
-  position: relative;
   padding: 5px 10px;
   overflow-y: scroll;
+  position: relative;
+  top: 0;
+  right: 0;
+  left: 0;
 }
 
 .message {
