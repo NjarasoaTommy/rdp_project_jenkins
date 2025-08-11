@@ -7,7 +7,7 @@
 }
 
 .parent_transition_verticale {
-  width: 20px;
+  width: 25px;
   height: 50px;
   display: flex;
   flex-direction: column;
@@ -28,10 +28,10 @@
 
 .transition_horizontale {
   width: 50px;
-  height: 20px;
+  height: 25px;
 }
 .transition_verticale {
-  width: 20px;
+  width: 25px;
   height: 50px;
 }
 .franchissable {
