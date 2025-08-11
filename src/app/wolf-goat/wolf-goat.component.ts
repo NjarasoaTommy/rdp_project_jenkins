@@ -59,27 +59,72 @@ export class WolfGoatComponent implements AfterViewInit {
     this.clearError();
     this.emptyError();
   }
+  getInputOutPut(inputs: any[], outputs: any[]) {
+    const inputOuput: any[] = [];
+    inputs.forEach((input) => {
+      outputs.forEach((output) => {
+        if (input[0] == output[0]) {
+          const nodePrePost = [
+            input[0],
+            input[2],
+            output[2],
+            input[1],
+            output[1],
+          ];
+          inputOuput.push(nodePrePost);
+        }
+      });
+    });
+    return inputOuput;
+  }
   franchir(type: string, id: string) {
     if (type != 'place') {
       const allPre = this.getAllPre(id);
       const allPost = this.getAllPost(id);
+      const inputOuput = this.getInputOutPut(allPre, allPost);
       this.franchissable = true;
       allPre.forEach((val: any[]) => {
-        const err = this.testFranchir(val[0], -1 * parseInt(val[2]), 'entrée');
-        if (err != '') {
-          this.franchissable = false;
-          this.errorList.push(err);
-          this.indicateError(val[0], 'place');
-          this.indicateError(val[1], 'arc');
+        let valOk = true;
+        inputOuput.forEach((io) => {
+          if (io[0] == val[0]) valOk = false;
+        });
+        if (valOk) {
+          const err = this.testFranchir(
+            val[0],
+            -1 * parseInt(val[2]),
+            'entrée'
+          );
+          if (err != '') {
+            this.franchissable = false;
+            this.errorList.push(err);
+            this.indicateError(val[0], 'place');
+            this.indicateError(val[1], 'arc');
+          }
         }
       });
       allPost.forEach((val: any[]) => {
-        const err = this.testFranchir(val[0], parseInt(val[2]), 'sortie');
+        let valOk = true;
+        inputOuput.forEach((io) => {
+          if (io[0] == val[0]) valOk = false;
+        });
+        if (valOk) {
+          const err = this.testFranchir(val[0], parseInt(val[2]), 'sortie');
+          if (err != '') {
+            this.franchissable = false;
+            this.errorList.push(err);
+            this.indicateError(val[0], 'place');
+            this.indicateError(val[1], 'arc');
+          }
+        }
+      });
+      inputOuput.forEach((val: any[]) => {
+        const err = this.testInputOutput(val);
         if (err != '') {
           this.franchissable = false;
           this.errorList.push(err);
           this.indicateError(val[0], 'place');
-          this.indicateError(val[1], 'arc');
+          this.indicateError(val[3], 'arc');
+          this.indicateError(val[4], 'arc');
         }
       });
 
@@ -133,7 +178,36 @@ export class WolfGoatComponent implements AfterViewInit {
       node.jetons += val;
     }
   }
-
+  testInputOutput(val: any[]): string {
+    const node = this.nodes.find((node) => node.id == val[0]);
+    const jet: number = node && node.jetons ? node.jetons : 0;
+    if (
+      node &&
+      node.capacity &&
+      jet - parseInt(val[1] + parseInt(val[2])) > node.capacity
+    ) {
+      return (
+        'La capacité maximale(' +
+        node.capacity +
+        ') de la place(' +
+        val[0] +
+        ') sera dépassée car la place(' +
+        val[0] +
+        ') a ' +
+        node.jetons +
+        ' jeton(s) et on enlève ' +
+        val[1] +
+        ' jeton(s) puis on rajoute ' +
+        val[2] +
+        ' jeton(s). Ce qui donne ' +
+        (node.jetons - val[1] + val[2]) +
+        ' jeton(s)(>' +
+        node.capacity +
+        ')'
+      );
+    }
+    return '';
+  }
   testFranchir(id: string, val: number, type: string): string {
     const node = this.nodes.find((node) => node.id == id);
     if (node && node.jetons == 0 && type == 'entrée') {
