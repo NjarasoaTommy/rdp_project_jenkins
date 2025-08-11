@@ -3,15 +3,23 @@
   top: 0;
   width: 100%;
   height: 40px;
+  display: flex !important;
+  align-items: center;
+  margin: 0;
+  padding: 0 !important;
 }
 .navbar-brand {
   font-weight: bold;
   font-size: 1.5rem;
   color: blue;
+  margin: 0;
+  padding: 0;
+  line-height: 40px;
+  height: 40px;
 }
 
 .nav-link {
-  padding: 0.75rem 1rem;
+  color: white;
   transition: color 0.3s, background-color 0.3s;
 }
 
@@ -23,10 +31,23 @@
 
 .nav-item.active .nav-link {
   font-weight: bold;
-  color: #0d6efd;
+  color: black;
 }
 
 .btn-login {
   border-radius: 20px;
   padding: 0.4rem 1rem;
+}
+
+.navbar-toggler {
+  position: fixed;
+  top: 1px;
+  right: 10px;
+  height: 38px;
+}
+
+#navbarContent {
+  background-color: blue;
+  z-index: 101;
+  border-radius: 0.5rem;
 }
