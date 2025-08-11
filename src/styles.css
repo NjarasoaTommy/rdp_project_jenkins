@@ -60,6 +60,7 @@
   font-size: 15px;
   display: block;
   text-align: center;
+  font-weight: bolder;
 }
 .capacity.error,
 .node-title.error {
