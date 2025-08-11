@@ -147,6 +147,7 @@ export class WolfGoatComponent implements AfterViewInit {
           this.removeNode('p6');
           this.removeNode('t2');
           this.removeNode('t6');
+          this.renderGraph();
         }
       } else {
         this.error = "Cette transition n'est pas franchissable.";
@@ -531,6 +532,5 @@ export class WolfGoatComponent implements AfterViewInit {
     this.links = this.links.filter(
       (link: any) => link.source != id && link.target != id
     );
-    this.renderGraph();
   }
 }
