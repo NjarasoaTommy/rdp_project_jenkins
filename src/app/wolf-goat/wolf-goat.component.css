@@ -10,16 +10,27 @@
   height: 90px;
 }
 
-.place.rouge {
+.noeuds.rouge {
   background-color: #f11;
 }
 
-.place.vert {
+.noeuds.vert {
   background-color: #1f1;
 }
 
-.place.orange {
+.noeuds.orange {
   background-color: orange;
+}
+.noeuds.bleu {
+  background-color: #11f;
+}
+
+.noeuds.rose {
+  background-color: pink;
+}
+
+.noeuds.gris {
+  background-color: gray;
 }
 
 strong.error {

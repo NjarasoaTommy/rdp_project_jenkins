@@ -39,10 +39,13 @@
                 [ngClass]="{
                   noeuds: true,
                   place: node.type == 'place',
-                  rouge: node.couleur == 'rouge',
+                  bleu: node.couleur == 'bleu',
                   vert: node.couleur == 'vert',
-                  error: node.isError,
+                  rose: node.couleur == 'rose',
                   orange: node.couleur == 'orange',
+                  gris: node.couleur == 'gris',
+                  rouge: node.couleur == 'rouge',
+                  error: node.isError,
                   transition_verticale: node.type == 'transition_verticale',
                   transition_horizontale: node.type == 'transition_horizontale',
                   franchissable:
