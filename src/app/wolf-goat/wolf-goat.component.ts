@@ -184,15 +184,15 @@ export class WolfGoatComponent implements AfterViewInit {
     if (
       node &&
       node.capacity &&
-      jet - parseInt(val[1] + parseInt(val[2])) > node.capacity
+      jet - parseInt(val[1]) + parseInt(val[2]) > node.capacity
     ) {
       return (
         'La capacité maximale(' +
         node.capacity +
         ') de la place(' +
-        val[0] +
+        node.label +
         ') sera dépassée car la place(' +
-        val[0] +
+        node.label +
         ') a ' +
         node.jetons +
         ' jeton(s) et on enlève ' +
