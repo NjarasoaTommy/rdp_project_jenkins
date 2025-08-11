@@ -181,30 +181,38 @@ export class WolfGoatComponent implements AfterViewInit {
   testInputOutput(val: any[]): string {
     const node = this.nodes.find((node) => node.id == val[0]);
     const jet: number = node && node.jetons ? node.jetons : 0;
-    if (
-      node &&
-      node.capacity &&
-      jet - parseInt(val[1]) + parseInt(val[2]) > node.capacity
-    ) {
-      return (
-        'La capacité maximale(' +
-        node.capacity +
-        ') de la place(' +
-        node.label +
-        ') sera dépassée car la place(' +
-        node.label +
-        ') a ' +
-        node.jetons +
-        ' jeton(s) et on enlève ' +
-        val[1] +
-        ' jeton(s) puis on rajoute ' +
-        val[2] +
-        ' jeton(s). Ce qui donne ' +
-        (node.jetons - val[1] + val[2]) +
-        ' jeton(s)(>' +
-        node.capacity +
-        ')'
-      );
+    if (node && node.capacity) {
+      if (jet < parseInt(val[1])) {
+        return (
+          'La place de départ(' +
+          node.label +
+          ") n'a pas suffisament de jeton : " +
+          node.jetons +
+          ' < capacité arc : ' +
+          val[1] +
+          '.'
+        );
+      } else if (jet - parseInt(val[1]) + parseInt(val[2]) > node.capacity) {
+        return (
+          'La capacité maximale(' +
+          node.capacity +
+          ') de la place(' +
+          node.label +
+          ') sera dépassée car la place(' +
+          node.label +
+          ') a ' +
+          node.jetons +
+          ' jeton(s) et on enlève ' +
+          val[1] +
+          ' jeton(s) puis on rajoute ' +
+          val[2] +
+          ' jeton(s). Ce qui donne ' +
+          (node.jetons - val[1] + val[2]) +
+          ' jeton(s)(>' +
+          node.capacity +
+          ')'
+        );
+      }
     }
     return '';
   }
@@ -222,7 +230,7 @@ export class WolfGoatComponent implements AfterViewInit {
       return (
         'La place de départ(' +
         node.label +
-        ") n'a pas suffisament de jeton: Jeton : " +
+        ") n'a pas suffisament de jeton : " +
         node.jetons +
         ' < capacité arc : ' +
         (val < 0 ? -1 * val : val) +
