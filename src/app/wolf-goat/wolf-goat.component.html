@@ -1,10 +1,8 @@
-<div class="parent">
-  <app-error-notification
-    *ngIf="showError"
-    [message]="error"
-    (hideNotification)="closeNotification()"
-  ></app-error-notification>
-</div>
+<app-error-notification
+  *ngIf="showError"
+  [message]="error"
+  (hideNotification)="closeNotification()"
+></app-error-notification>
 <div class="graph-container">
   <ngx-graph
     [nodes]="nodes"
