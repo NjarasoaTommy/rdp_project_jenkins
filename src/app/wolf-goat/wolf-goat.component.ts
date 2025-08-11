@@ -133,6 +133,21 @@ export class WolfGoatComponent implements AfterViewInit {
           this.updateJeton(val[0], -1 * parseInt(val[2]))
         );
         allPost.forEach((val) => this.updateJeton(val[0], parseInt(val[2])));
+        if (id == 't9' || id == 't11') {
+          this.removeNode('t9');
+          this.removeNode('t11');
+          this.removeNode('p1');
+          this.removeNode('p5');
+          this.removeNode('t1');
+          this.removeNode('t5');
+        } else if (id == 't10' || id == 't12') {
+          this.removeNode('t10');
+          this.removeNode('t12');
+          this.removeNode('p2');
+          this.removeNode('p6');
+          this.removeNode('t2');
+          this.removeNode('t6');
+        }
       } else {
         this.error = "Cette transition n'est pas franchissable.";
         for (let err of this.errorList) {
@@ -507,6 +522,15 @@ export class WolfGoatComponent implements AfterViewInit {
       link.isError = false;
     });
     this.removeError();
+    this.renderGraph();
+  }
+
+  removeNode(id: string) {
+    console.log(id);
+    this.nodes = this.nodes.filter((node: any) => node.id != id);
+    this.links = this.links.filter(
+      (link: any) => link.source != id && link.target != id
+    );
     this.renderGraph();
   }
 }
