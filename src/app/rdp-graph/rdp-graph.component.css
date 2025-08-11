@@ -1,0 +1,42 @@
+.graph-container {
+  width: 100%;
+  height: 300vh;
+}
+.parent_transition_verticale {
+  height: 90px;
+}
+
+.parent_transition_horizontale {
+  height: 90px;
+}
+
+.noeuds.rouge {
+  background-color: #f11;
+}
+
+.noeuds.vert {
+  background-color: #1f1;
+}
+
+.noeuds.orange {
+  background-color: orange;
+}
+.noeuds.bleu {
+  background-color: #11f;
+}
+
+.noeuds.rose {
+  background-color: pink;
+}
+
+.noeuds.gris {
+  background-color: gray;
+}
+
+strong.error {
+  color: red;
+}
+.place.error,
+.noeuds.error {
+  border: 5px solid red;
+}
