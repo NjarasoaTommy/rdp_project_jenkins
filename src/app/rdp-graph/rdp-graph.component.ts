@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 export class RdpGraphComponent implements AfterViewInit, OnInit {
   @Input() nodes: any[] = [];
   @Input() links: any[] = [];
+  @Input() type: string = '';
 
   error = '';
   showError = false;
@@ -38,6 +39,7 @@ export class RdpGraphComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.graphService.links = this.links;
     this.graphService.nodes = this.nodes;
+    this.graphService.type = this.type;
     this.graphService.host = this.elRef.nativeElement;
     this.graphService.checkError();
     this.errorSubscription = this.graphService.errorSubject.subscribe(

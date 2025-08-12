@@ -13,6 +13,7 @@ export class GraphService {
   links: any[] = [];
   nodes: any[] = [];
   host: any;
+  type: string = '';
 
   constructor() {}
 
@@ -149,7 +150,7 @@ export class GraphService {
           this.updateJeton(val[0], -1 * parseInt(val[2]))
         );
         allPost.forEach((val) => this.updateJeton(val[0], parseInt(val[2])));
-        if (id == 't9' || id == 't11') {
+        if (this.type == 'with-dynamic-remove' && (id == 't9' || id == 't11')) {
           this.removeNode('t9');
           this.removeNode('t11');
           this.removeNode('p1');
@@ -158,7 +159,10 @@ export class GraphService {
           this.removeNode('t5');
           this.emitLinksSubject();
           this.emitNodesSubject();
-        } else if (id == 't10' || id == 't12') {
+        } else if (
+          this.type == 'with-dynamic-remove' &&
+          (id == 't10' || id == 't12')
+        ) {
           this.removeNode('t10');
           this.removeNode('t12');
           this.removeNode('p2');
