@@ -39,7 +39,7 @@ pipeline {
 
     stage('Build Angular') {
       steps {
-        sh 'npx ng build --configuration production --base-href="/rdp_project/"'
+        sh 'npx ng build --configuration production --base-href="/rdp_project_jenkins/"'
       }
     }
 
@@ -64,7 +64,7 @@ pipeline {
               npx angular-cli-ghpages \
                 --dir=dist/${out}/browser \
                 --no-silent \
-                --repo=https://$TOKEN@github.com/NjarasoaTommy/rd_project.git \
+                --repo=https://$TOKEN@github.com/NjarasoaTommy/rd_project_jenkins.git \
                 --branch=gh-pages
             """
           }
